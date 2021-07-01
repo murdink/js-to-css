@@ -3819,11 +3819,6 @@ css-declaration-sorter@^4.0.1:
     postcss "^7.0.1"
     timsort "^0.3.0"
 
-css-format@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/css-format/-/css-format-1.0.0.tgz#cc87ed6e3cafa891f0447e930a7c103b3b292ddb"
-  integrity sha1-zIftbjyvqJHwRH6TCnwQOzspLds=
-
 css-has-pseudo@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/css-has-pseudo/-/css-has-pseudo-0.10.0.tgz#3c642ab34ca242c59c41a125df9105841f6966ee"
@@ -3925,6 +3920,11 @@ css@^3.0.0:
     inherits "^2.0.4"
     source-map "^0.6.1"
     source-map-resolve "^0.6.0"
+
+cssbeautify@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/cssbeautify/-/cssbeautify-0.3.1.tgz#12dd1f734035c2e6faca67dcbdcef74e42811397"
+  integrity sha1-Et0fc0A1wub6ymfcvc73TkKBE5c=
 
 cssdb@^4.4.0:
   version "4.4.0"

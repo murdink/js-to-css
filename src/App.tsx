@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import cssbeautify from "css-format";
+import cssbeautify from "cssbeautify";
 import styled from "styled-components";
 import styleToCss from "style-object-to-css-string";
 
@@ -39,22 +39,18 @@ const Result = styled.pre`
 
 const Title = styled.h1`
   margin-top: 0;
-`
+`;
 
 const App = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [result, setResult] = useState([]);
-  console.log("🚀 ~ file: App.tsx ~ line 15 ~ App ~ result", result);
-  const content = cssbeautify(
-    result
-      .map(([key, styleObject]) => `.${key} { ${styleToCss(styleObject)} }`)
-      .join(""),
-    {
-      openbrace: "separate-line",
-      autosemicolon: true,
-    }
-  );
-  console.log("🚀 ~ file: App.tsx ~ line 51 ~ App ~ content", content);
+  const content = 
+    result.every(([_, value]) => typeof value !== "object")
+      ? styleToCss(Object.fromEntries(result))
+      : result
+          .map(([key, styleObject]) => `.${key} { ${styleToCss(styleObject)} }`)
+          .join("")
+ 
 
   return (
     <AppContainer>
@@ -69,14 +65,14 @@ const App = () => {
               setResult(Object.entries(obj));
             `);
             } catch (error) {
-              return null;
+              setResult([])
             }
           }}
         />
       </Wrapper>
       <Wrapper>
         <Title>CSS</Title>
-        <Result>{content}</Result>
+        <Result>{cssbeautify(content)}</Result>
       </Wrapper>
     </AppContainer>
   );
