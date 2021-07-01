@@ -42,7 +42,6 @@ const Title = styled.h1`
 `;
 
 const App = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [result, setResult] = useState([]);
   const content = 
     result.every(([_, value]) => typeof value !== "object")
