@@ -1,26 +1,63 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import styled from "styled-components";
+import styleToCss from "style-object-to-css-string";
 
-function App() {
+const AppContainer = styled.div`
+  display: flex;
+`;
+
+const Input = styled.textarea`
+  flex: 1;
+  min-height: 500px;
+  height: 100vh;
+  border: dotted 1px black;
+`;
+
+const Wrapper = styled.div`
+  flex: 1;
+  min-height: 500px;
+  border: solid 1px black;
+`;
+
+const MarkdownWrapper = ({
+  children,
+  className = "",
+}: {
+  children: string;
+  className?: string;
+}) => (
+  <Wrapper className={className}>
+    <ReactMarkdown>{children}</ReactMarkdown>
+  </Wrapper>
+);
+
+const App = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [result, setResult] = useState([]);
+  console.log("🚀 ~ file: App.tsx ~ line 15 ~ App ~ result", result);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppContainer>
+      <Input
+        onChange={(event) => {
+          try {
+            // eslint-disable-next-line no-eval
+            eval(`
+              var obj= ${event.target.value};
+              setResult(Object.entries(obj));
+            `);
+          } catch (error) {
+            return null;
+          }
+        }}
+      />
+      <MarkdownWrapper>
+        {result
+          .map(([key, styleObject]) => `.${key} { ${styleToCss(styleObject)} }\n`)
+          .join("\n")}
+      </MarkdownWrapper>
+    </AppContainer>
   );
-}
+};
 
 export default App;
