@@ -27,7 +27,6 @@ const Input = styled.textarea`
 
 const Result = styled.pre`
   flex: 1;
-  min-height: 500px;
   height: 100%;
   border-radius: 20px;
   border: solid 2px gray;
@@ -37,6 +36,10 @@ const Result = styled.pre`
   margin: 0;
   background: white;
 `;
+
+const Title = styled.h1`
+  margin-top: 0;
+`
 
 const App = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -56,7 +59,7 @@ const App = () => {
   return (
     <AppContainer>
       <Wrapper>
-        <h1>JS</h1>
+        <Title>JS</Title>
         <Input
           onChange={(event) => {
             try {
@@ -72,7 +75,7 @@ const App = () => {
         />
       </Wrapper>
       <Wrapper>
-        <h1>CSS</h1>
+        <Title>CSS</Title>
         <Result>{content}</Result>
       </Wrapper>
     </AppContainer>
