@@ -17,6 +17,7 @@ $ yarn start
 ## Caveats:
 - Max 1-level depth for JS objects.
 - If the input value is an integer e.g. `borderWidth: 15` you will need to add the `px` bit manually in the CSS.
+- Trying to input any kind of constant e.g. `border: borders.medium` will fail the parsing altogether.
 
 ### Works:
 **Input**:
