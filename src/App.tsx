@@ -41,21 +41,33 @@ const Title = styled.h1`
   margin-top: 0;
 `;
 
+const placeholder = `{
+  border: 'none'
+}
+
+OR
+
+{
+  foo: {
+    width: '15px',
+    border: 'none'
+  }
+}`
+
 const App = () => {
   const [result, setResult] = useState([]);
-  const content = 
-    result.every(([_, value]) => typeof value !== "object")
-      ? styleToCss(Object.fromEntries(result))
-      : result
-          .map(([key, styleObject]) => `.${key} { ${styleToCss(styleObject)} }`)
-          .join("")
- 
+  const content = result.every(([_, value]) => typeof value !== "object")
+    ? styleToCss(Object.fromEntries(result))
+    : result
+        .map(([key, styleObject]) => `.${key} { ${styleToCss(styleObject)} }`)
+        .join("");
 
   return (
     <AppContainer>
       <Wrapper>
         <Title>JS</Title>
         <Input
+          placeholder={placeholder}
           onChange={(event) => {
             try {
               // eslint-disable-next-line no-eval
@@ -64,7 +76,7 @@ const App = () => {
               setResult(Object.entries(obj));
             `);
             } catch (error) {
-              setResult([])
+              setResult([]);
             }
           }}
         />
