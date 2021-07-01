@@ -19,22 +19,23 @@ const Wrapper = styled.div`
 const Input = styled.textarea`
   height: 100%;
   width: 100%;
-  border: solid 2px gray;
+  border: dashed 1px black;
+  resize: none;
   overflow-y: auto;
   border-radius: 20px;
   padding: 20px;
+  box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.2);
 `;
 
-const Result = styled.pre`
-  flex: 1;
+const Result = styled.pre<{ valid: Boolean }>`
   height: 100%;
   border-radius: 20px;
-  border: solid 2px gray;
-  padding: 0;
   overflow-y: auto;
   padding: 20px;
   margin: 0;
   background: white;
+  box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.2);
+  border: solid 2px ${({ valid }) => (valid ? "#75B56E" : "#E1E2E4")};
 `;
 
 const Title = styled.h1`
@@ -52,7 +53,7 @@ OR
     width: '15px',
     border: 'none'
   }
-}`
+}`;
 
 const App = () => {
   const [result, setResult] = useState([]);
@@ -83,7 +84,7 @@ const App = () => {
       </Wrapper>
       <Wrapper>
         <Title>CSS</Title>
-        <Result>{cssbeautify(content)}</Result>
+        <Result valid={Boolean(content)}>{cssbeautify(content)}</Result>
       </Wrapper>
     </AppContainer>
   );
