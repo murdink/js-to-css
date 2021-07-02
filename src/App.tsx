@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import cssbeautify from "cssbeautify";
 import styled from "styled-components";
 import styleToCss from "style-object-to-css-string";
+import AceEditor from "react-ace";
+
+import "ace-builds/src-noconflict/mode-java";
+import "ace-builds/src-noconflict/theme-github";
+import { useEffect } from "react";
 
 const AppContainer = styled.div`
   display: flex;
@@ -14,17 +19,6 @@ const Wrapper = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
-`;
-
-const Input = styled.textarea`
-  height: 100%;
-  width: 100%;
-  border: dashed 1px black;
-  resize: none;
-  overflow-y: auto;
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.2);
 `;
 
 const Result = styled.pre<{ valid: Boolean }>`
@@ -42,13 +36,7 @@ const Title = styled.h1`
   margin-top: 0;
 `;
 
-const placeholder = `{
-  border: 'none'
-}
-
-OR
-
-{
+const defaultValue = `{
   foo: {
     width: '15px',
     border: 'none'
@@ -62,24 +50,36 @@ const App = () => {
     : result
         .map(([key, styleObject]) => `.${key} { ${styleToCss(styleObject)} }`)
         .join("");
+  const handleChange = (value: string) => {
+    try {
+      // eslint-disable-next-line no-eval
+      eval(`
+        var obj= ${value};
+        setResult(Object.entries(obj));
+      `);
+    } catch (error) {
+      setResult([]);
+    }
+  };
+  useEffect(() => {
+    handleChange(defaultValue)
+  }, [])
 
   return (
     <AppContainer>
       <Wrapper>
         <Title>JS</Title>
-        <Input
-          placeholder={placeholder}
-          onChange={(event) => {
-            try {
-              // eslint-disable-next-line no-eval
-              eval(`
-              var obj= ${event.target.value};
-              setResult(Object.entries(obj));
-            `);
-            } catch (error) {
-              setResult([]);
-            }
+        <AceEditor
+          defaultValue={defaultValue}
+          mode="javascript"
+          theme="github"
+          style={{
+            height: "100%",
+            width: "100%",
           }}
+          onChange={handleChange}
+          name="UNIQUE_ID_OF_DIV"
+          editorProps={{ $blockScrolling: true }}
         />
       </Wrapper>
       <Wrapper>
