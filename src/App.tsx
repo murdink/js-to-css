@@ -40,7 +40,7 @@ const Title = styled.h1`
 const defaultValue = `{
   foo: {
     width: '15px',
-    border: 'none'
+    borderWidth: '5px'
   }
 }`;
 
