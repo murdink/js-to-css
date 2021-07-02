@@ -6919,7 +6919,7 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
-json5@^2.1.2:
+json5@^2.1.2, json5@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/json5/-/json5-2.2.0.tgz#2dfefe720c6ba525d9ebd909950f0515316c89a3"
   integrity sha512-f+8cldu7X/y7RAJurMEJmdoKXGB/X550w2Nr3tTbezL6RwEE/iMcm+tZnXeoZtKuOq6ft8+CqzEkrIgx1fPoQA==
@@ -9755,6 +9755,11 @@ safe-buffer@>=5.1.0, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.1,
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.2.1.tgz#1eaf9fa9bdb1fdd4ec75f58f9cdb4e6b7827eec6"
   integrity sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==
+
+safe-eval@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/safe-eval/-/safe-eval-0.4.1.tgz#e54ba5a1bbdec795d488f6c8765e0c2a78b4cdc0"
+  integrity sha512-wmiu4RSYVZ690RP1+cv/LxfPK1dIlEN35aW7iv4SMYdqDrHbkll4+NJcHmKm7PbCuI1df1otOcPwgcc2iFR85g==
 
 safe-regex@^1.1.0:
   version "1.1.0"

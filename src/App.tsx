@@ -3,6 +3,7 @@ import cssbeautify from "cssbeautify";
 import styled from "styled-components";
 import styleToCss from "style-object-to-css-string";
 import AceEditor from "react-ace";
+import safeEval from "safe-eval";
 
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
@@ -44,26 +45,39 @@ const defaultValue = `{
 }`;
 
 const App = () => {
-  const [result, setResult] = useState([]);
-  const content = result.every(([_, value]) => typeof value !== "object")
-    ? styleToCss(Object.fromEntries(result))
-    : result
-        .map(([key, styleObject]) => `.${key} { ${styleToCss(styleObject)} }`)
-        .join("");
+  const [evalResult, setResult] = useState<[string, string][]>([]);
+  const [content, setContent] = useState<string>("");
+  useEffect(() => {
+    try {
+      if (evalResult.every(([_, value]) => typeof value !== "object")) {
+        setContent(styleToCss(Object.fromEntries(evalResult)));
+      } else {
+        setContent(
+          evalResult
+            .map(
+              ([key, styleObject]) => `.${key} { ${styleToCss(styleObject)} }`
+            )
+            .join("")
+        );
+      }
+    } catch (error) {
+      setContent("");
+    }
+  }, [evalResult]);
   const handleChange = (value: string) => {
     try {
       // eslint-disable-next-line no-eval
-      eval(`
-        var obj= ${value};
+      const obj = safeEval(value);
+      if (typeof obj === "object") {
         setResult(Object.entries(obj));
-      `);
+      }
     } catch (error) {
       setResult([]);
     }
   };
   useEffect(() => {
-    handleChange(defaultValue)
-  }, [])
+    handleChange(defaultValue);
+  }, []);
 
   return (
     <AppContainer>
