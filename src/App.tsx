@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { pascalCase } from "change-case";
 import cssbeautify from "cssbeautify";
 import styled from "styled-components";
 import styleToCss from "style-object-to-css-string";
@@ -55,7 +56,8 @@ const App = () => {
         setContent(
           evalResult
             .map(
-              ([key, styleObject]) => `.${key} { ${styleToCss(styleObject)} }`
+              ([key, styleObject]) =>
+                `.${pascalCase(key)} { ${styleToCss(styleObject)} }`
             )
             .join("")
         );
@@ -66,7 +68,6 @@ const App = () => {
   }, [evalResult]);
   const handleChange = (value: string) => {
     try {
-      // eslint-disable-next-line no-eval
       const obj = safeEval(value);
       if (typeof obj === "object") {
         setResult(Object.entries(obj));
