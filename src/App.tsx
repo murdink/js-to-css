@@ -14,6 +14,11 @@ const AppContainer = styled.div`
   display: flex;
 `;
 
+const Label = styled.label`
+  padding-bottom: 20px;
+  cursor: pointer;
+`;
+
 const Wrapper = styled.div`
   flex: 1;
   min-height: 500px;
@@ -48,6 +53,8 @@ const defaultValue = `{
 const App = () => {
   const [evalResult, setResult] = useState<[string, string][]>([]);
   const [content, setContent] = useState<string>("");
+  const [shouldUsePascal, setShouldUsePascal] = useState<boolean>(true);
+
   useEffect(() => {
     try {
       if (evalResult.every(([_, value]) => typeof value !== "object")) {
@@ -57,7 +64,7 @@ const App = () => {
           evalResult
             .map(
               ([key, styleObject]) =>
-                `.${pascalCase(key)} { ${styleToCss(styleObject)} }`
+                `.${shouldUsePascal ? pascalCase(key) : key} { ${styleToCss(styleObject)} }`
             )
             .join("")
         );
@@ -65,7 +72,7 @@ const App = () => {
     } catch (error) {
       setContent("");
     }
-  }, [evalResult]);
+  }, [evalResult, shouldUsePascal]);
   const handleChange = (value: string) => {
     try {
       const obj = safeEval(value);
@@ -95,10 +102,20 @@ const App = () => {
           onChange={handleChange}
           name="UNIQUE_ID_OF_DIV"
           editorProps={{ $blockScrolling: true }}
+          setOptions={{ useWorker: false }}
         />
       </Wrapper>
       <Wrapper>
         <Title>CSS</Title>
+        <Label htmlFor="usePascal">
+          Use pascal case for class names:{" "}
+          <input
+            type="checkbox"
+            id="usePascal"
+            onChange={(e) => setShouldUsePascal(e.target.checked)}
+            checked={shouldUsePascal}
+          ></input>
+        </Label>
         <Result valid={Boolean(content)}>{cssbeautify(content)}</Result>
       </Wrapper>
     </AppContainer>
