@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { pascalCase } from "change-case";
 import cssbeautify from "cssbeautify";
 import styled from "styled-components";
@@ -9,6 +9,7 @@ import safeEval from "safe-eval";
 import "ace-builds/src-noconflict/mode-java";
 import "ace-builds/src-noconflict/theme-github";
 import { useEffect } from "react";
+import { CSS_CONSTS as CONSTS } from "./constants";
 
 const AppContainer = styled.div`
   display: flex;
@@ -64,7 +65,9 @@ const App = () => {
           evalResult
             .map(
               ([key, styleObject]) =>
-                `.${shouldUsePascal ? pascalCase(key) : key} { ${styleToCss(styleObject)} }`
+                `.${shouldUsePascal ? pascalCase(key) : key} { ${styleToCss(
+                  styleObject
+                )} }`
             )
             .join("")
         );
@@ -75,7 +78,10 @@ const App = () => {
   }, [evalResult, shouldUsePascal]);
   const handleChange = (value: string) => {
     try {
-      const obj = safeEval(value);
+      const obj = safeEval(`(function() {
+        var CSS_CONSTS = ${JSON.stringify(CONSTS)};
+        return ${value}
+      })()`);
       if (typeof obj === "object") {
         setResult(Object.entries(obj));
       }
