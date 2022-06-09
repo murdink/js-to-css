@@ -2,7 +2,7 @@
 
 ![image](https://user-images.githubusercontent.com/25004351/124197046-f7793a00-dacd-11eb-8e15-95d20ea8f136.png)
 
-Live at https://js-style-to-css.netlify.app/
+Live at [https://js-style-to-css.netlify.app/](https://js2css.netlify.app/)
 
 Simple conversion Web App for a better DX.
 
